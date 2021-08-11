@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table
 
-public class Portfolio implements Serializable {
+public class Portfolio extends BaseTimeEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,15 +33,15 @@ public class Portfolio implements Serializable {
     @Enumerated(EnumType.STRING)
     private PortfolioType portfolioType;
 
-    @Column
-    private Reply reply;
+//    @Column
+//    private Reply reply();
 
     @Builder
     public Portfolio(String title, String content, PortfolioType portfolioType, Reply reply){
         this.title = title;
         this.content = content;
         this.portfolioType = portfolioType;
-        this.reply = reply;
+//        this.reply = reply;
     }
 
 }

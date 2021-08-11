@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table
 
-public class Reply implements Serializable {
+public class Reply extends BaseTimeEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,5 +20,17 @@ public class Reply implements Serializable {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String content;
+
+//    @Column
+//    private User user();
+
+//    @Builder
+//    public Reply(String content, User user){
+//        this.content = content;
+//        this.user = user;
+//    }
 
 }
