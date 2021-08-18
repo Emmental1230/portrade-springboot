@@ -1,11 +1,14 @@
 package com.portrade.www.portradespringboot.domain.user;
 
 import com.portrade.www.portradespringboot.domain.BaseTimeEntity;
+import com.portrade.www.portradespringboot.domain.Portfolio;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -37,6 +40,9 @@ public class User extends BaseTimeEntity {
         this.picture = picture;
         this.role = role;
     }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<Portfolio> portfolios = new ArrayList<>();
 
     public User update(String name, String picture) {
         this.name = name;

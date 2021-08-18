@@ -1,10 +1,10 @@
 package com.portrade.www.portradespringboot.domain;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
-import com.portrade.www.portradespringboot.domain.enums.PortfolioType;
-import com.portrade.www.portradespringboot.domain.Reply;
+import com.portrade.www.portradespringboot.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,34 +14,70 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table
 
-public class Portfolio extends BaseTimeEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Portfolio extends BaseTimeEntity{
 
     @Id
-    @Column
+    @Column()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(cascade = CascadeType.MERGE, targetEntity = User.class)
+    @JoinColumn(updatable = false)
+    private User user;
 
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    private PortfolioType portfolioType;
+    private String portfolioType;
 
-//    @Column
-//    private Reply reply();
+    @OneToMany(
+            mappedBy = "portfolio",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true
+    )
+    private List<Photo> photo = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "portfolio",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true
+    )
+    private List<Reply> reply = new ArrayList<>();
 
     @Builder
-    public Portfolio(String title, String content, PortfolioType portfolioType, Reply reply){
+    public Portfolio(User user, String title, String content, String portfolioType){
+        this.user = user;
         this.title = title;
         this.content = content;
         this.portfolioType = portfolioType;
-//        this.reply = reply;
+    }
+
+    // 포트폴리오 사진 처리를 위한 메서드
+    public void addPhoto(Photo photo) {
+        this.photo.add(photo);
+
+        // 포트폴리오 사진이 없을 경우
+        if(photo.getPortfolio() != this)
+            photo.setPortfolio(this);
+    }
+
+    // 포트폴리오 댓글 처리를 위한 메서드
+    public void addReply(Reply reply) {
+        this.reply.add(reply);
+
+        // 포트폴리오 댓글이 없을 경우
+        if(reply.getPortfolio() != this)
+            reply.setPortfolio(this);
+    }
+
+    public void update(String title, String content, String portfolioType) {
+        this.title = title;
+        this.content = content;
+        this.portfolioType = portfolioType;
     }
 
 }
