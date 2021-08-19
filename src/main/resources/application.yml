@@ -1,4 +1,23 @@
+#spring:
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#  jackson:
+#    property-naming-strategy: SNAKE_CASE
+#
+#custom:
+#  pageable:
+#    offset: 0
+#    limit: 10
+
 spring:
+  session:
+    jdbc:
+      initialize-schema: always
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/example?serverTimezone=UTC&characterEncoding=UTF-8

@@ -9,16 +9,16 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table()
+@Table(name = "photo")
 public class Photo extends BaseTimeEntity {
 
     @Id
-    @Column()
+    @Column(name = "photo_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn()
+    @JoinColumn(name = "portfolio_id")
     private Portfolio portfolio;
 
     @Column

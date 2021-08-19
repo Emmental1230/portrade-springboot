@@ -12,17 +12,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table
-
+@Table(name = "PORTFOLIO")
 public class Portfolio extends BaseTimeEntity{
 
     @Id
-    @Column()
+    @Column(name = "portfolio_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(cascade = CascadeType.MERGE, targetEntity = User.class)
-    @JoinColumn(updatable = false)
+    @JoinColumn(name = "user_id", updatable = false)
     private User user;
 
     @Column(nullable = false)

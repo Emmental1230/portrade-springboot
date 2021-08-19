@@ -9,20 +9,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table()
+@Table(name = "reply")
 public class Reply extends BaseTimeEntity {
 
     @Id
-    @Column
+    @Column(name = "reply_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn()
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name = "portfolio_id")
     private Portfolio portfolio;
 
-    @OneToOne
-    @JoinColumn()
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(nullable = false)
