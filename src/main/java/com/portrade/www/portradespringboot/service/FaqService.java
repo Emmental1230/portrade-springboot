@@ -1,6 +1,8 @@
 package com.portrade.www.portradespringboot.service;
 
 import com.portrade.www.portradespringboot.domain.faq.Faq;
+import com.portrade.www.portradespringboot.domain.user.User;
+import com.portrade.www.portradespringboot.error.NotFoundException;
 import com.portrade.www.portradespringboot.repository.FaqRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -15,8 +17,8 @@ public class FaqService {
 
     private final FaqRepository faqRepository;
 
-    public Faq findById(final Long id) throws Exception {
-        return faqRepository.findById(id).orElseThrow(() -> new Exception("NOT_FOUND_EXCEPTION"));
+    public Faq findById(final Long id) {
+        return faqRepository.findById(id).orElseThrow(() -> new NotFoundException(User.class, id));
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.portrade.www.portradespringboot.service;
 
 import com.portrade.www.portradespringboot.domain.notice.Notice;
+import com.portrade.www.portradespringboot.error.NotFoundException;
 import com.portrade.www.portradespringboot.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -15,8 +16,8 @@ public class NoticeService {
 
     private final NoticeRepository noticeRepository;
 
-    public Notice findById(final Long id) throws Exception {
-        return noticeRepository.findById(id).orElseThrow(() -> new Exception("NOT_FOUND_EXCEPTION"));
+    public Notice findById(final Long id) {
+        return noticeRepository.findById(id).orElseThrow(() -> new NotFoundException(Notice.class, id));
     }
 
     /**
