@@ -20,13 +20,26 @@ import java.util.Collections;
 
 @RequiredArgsConstructor
 @Service
-public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+public class CustomOAuth2UserService extends DefaultOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final UserRepository userRepository;
     private final HttpSession httpSession;
 
-    @Override
+    //google로 부터 받은 userRequest 데이터를 후처리하는 함수
+    //data : 회원 profile , 등...
+   @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService delegate = new DefaultOAuth2UserService();
+
+
+
+        System.out.println("--------");
+        System.out.println("getClientRegistration: "+userRequest.getClientRegistration());
+        System.out.println("getAccessToken: "+userRequest.getAccessToken());
+        System.out.println("getTokenValue: "+userRequest.getAccessToken().getTokenValue());
+        System.out.println("getClientRegistration: "+super.loadUser(userRequest).getAttributes());
+        System.out.println("--------");
+
+
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId();        //현재 로그인 진행중인 서비스를 구분하기 위한 id

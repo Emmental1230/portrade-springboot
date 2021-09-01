@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,5 +31,18 @@ public class IndexController {
     public String postsSave() {
         return "posts-save";
     }
+//---------------------------------------------------------------------------------------------
+
+    @GetMapping("/signin")
+    public @ResponseBody String signIn() {
+        return "signIn";
+    }
+
+    @GetMapping("/signUp")
+    public @ResponseBody String signUp() {
+        return "signUp";
+    }
+
+
 
 }

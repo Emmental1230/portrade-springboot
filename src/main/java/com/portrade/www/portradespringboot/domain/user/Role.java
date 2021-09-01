@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@RequiredArgsConstructor    //생성자를 만들어주기 위함
 //사용자의 권한을 관리할 Enum 클래스
 public enum Role {
 
